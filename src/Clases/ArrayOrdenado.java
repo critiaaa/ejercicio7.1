@@ -121,206 +121,62 @@ public class ArrayOrdenado {
 			
 		}
 	
-		/**
-		 * Método que recibe un valor y lo que hace es buscar ese valor en el array y borrarlo, solo borra 
-		 * el primer número igual al valor recibido
-		 * @param int valor
-		 * @return booleano
-		 * si borramos devulve true y si no encontramos el valor devulve un false
-		 */
+	/**
+	 * Método borrarValor, que dado un valor como parámetro, borrará su primera aparición en el
+	 * array y reorganizará dicho array para que todos los valores NULO(-9), estén al final del
+	 * mismo, nos devolverá un booleano siendo true si borra algún valor o false si no encuentra ningún
+	 * valor igual al dado por parámetro.
+	 * 
+	 * @param valor
+	 * @return booleano true si borra algún valor y false si no encuentra ese valor en el array.
+	 * @author Gonzalo Vicente Cepeda
+	 */
 		public boolean borrarValor (int valor) {
-			boolean borrar = false , salir = true , lleno = true;
-			int i , j , tamaño = 0;
-			
-			//miramos si el array está lleno
-			for (i = 0 ; i < this.array.length && lleno; i++) {
-				if(this.array[i] == -9) {
-					lleno = false;
-					tamaño = i;
+			boolean sw = false;
+			int i, j, aux;
+			for (i = 0; i < this.array.length && sw == false; i++) {
+				if (this.array[i] == valor) {
+					this.array[i] = this.NULO;
+					sw = true;
+					for (j = i; j < this.array.length - 1; j ++) {
+						aux = this.array[j];
+						this.array[j] = this.array[j + 1];
+						this.array[j + 1] = aux;
+					}
 				}
 			}
-			
-			/**
-			 * si el array está lleno, búscamos si se encuentra coincidencia entre dos valores, desde la posición que se encuentra el valor hasta el final del array
-			 * vamos pasando el valor del array a una posición menos
-			 */
-			if (lleno) {
-					/*
-					 * Aquí búscamos la posición donde queremos borrar
-					 */
-					for (i = 0 ; i < this.array.length && salir ; i++) {
-						if (this.array[i] == valor) {
-							salir = false;
-						}
-					}
-					
-					/*
-					 * sí la posición es más menor que el tamaño del array vamos pasando desde la posición que queremos borrar una posición más del array
-					 * y la última posición la borramos
-					 */
-					if (i < this.array.length) {
-						for(j = i ; j < this.array.length ; j++) {
-							this.array[j -1] = this.array[j];
-						}
-						this.array[this.array.length -1] = nulo;
-						borrar = true;
-					}
-					
-					/*
-					 * si la posición es la última del tamaño del array lo que hacemos es borrar la última posición
-					 */
-					if (i == this.array.length) {
-						this.array[i -1] = nulo;
-						borrar = true;
-					}
-					
-					//si el array no esta lleno de valores no vamos aqui
-				}else {	
-					
-					/*
-					 * búscamos la posición del valor que queremos borrar
-					 */
-					for (i = 0 ; i < this.array.length && salir ; i++) {
-						if (this.array[i] == valor) {
-							salir = false;
-						}
-					}
-					
-					/*
-					 * aqui ponemos las diferentes opciones que tenemos si el array no esta lleno y la posición que queramos borrar
-					 */
-					//si el array no esta lleno y solo hay un número
-					 if (i -1 == 0 && tamaño == 1) {
-						this.array[0] = nulo;	
-						borrar = true;
-					 }else {
-						 //si la posición que queremos borrar es la del tamaño del array
-						 if (i == tamaño) {
-							 this.array[i -1] = nulo;
-							 borrar = true;
-						 }else {
-							 //si la posición que queremos borrar está en medio del array
-							 if (i > 0) {
-								for(j = i ; j < this.array.length ; j++) {
-									this.array[j -1] = this.array[j];
-								}
-								borrar = true;
-							} 
-						 }
-					 }
-			}
-			
-			return borrar;
-			
+			return sw;
 		}
 		
 		
 		/**
-		 * recibe un valor y busca todos los valores iguales en el array y los borra
-		 * @param int valor
-		 * @return int valoresBorrados
-		 * devulve la cantidad de valores que hemos borrado del array
+		 * Método borrarTodosValor que dado un valor por parámetro, borrará todos los valores coincidentes
+		 * en el array, devolviendo el numero de valores borrados.
+		 * 
+		 * @param valor
+		 * @return Número entero haciendo referencia al número de valores borrados.
+		 * @author Gonzalo Vicente Cepeda
 		 */
 		public int borrarTodosValor (int valor) {
-			int totalBorrados = 0;
-			boolean  salir = true , lleno = true , terminar = true;
-			int i , j , tamaño = 0;
-			
-			
-			
-			while (terminar) {
-		
-				//miramos si el array está lleno
-				for (i = 0 ; i < this.array.length && lleno; i++) {
-					if(this.array[i] == -9) {
-						lleno = false;
-						tamaño = i;
+			int cantidad = 0, i, cont, j, aux;
+			for (i = 0; i < this.array.length; i++) {
+				if (this.array[i] == valor) {
+					this.array[i] = this.NULO;
+					cantidad ++;
+				}
+			}
+			for (cont = cantidad; cont > 0; cont--) {
+				for (i = 0; i < this.array.length; i++) {
+					if (this.array[i] == this.NULO) {
+						for (j = i; j < this.array.length - 1; j ++) {
+							aux = this.array[j];
+							this.array[j] = this.array[j + 1];
+							this.array[j + 1] = aux;
+						}
 					}
 				}
-			
-				/**
-				 * si el array está lleno, búscamos si se encuentra coincidencia entre dos valores, desde la posición que se encuentra el valor hasta el final del array
-				 * vamos pasando el valor del array a una posición menos
-				 */
-				if (lleno) {
-						/*
-						 * Aquí búscamos la posición donde queremos borrar
-						 */
-						for (i = 0 ; i < this.array.length && salir ; i++) {
-							if (this.array[i] == valor) {
-								salir = false;
-							}
-						}
-						
-						if (salir) {
-							terminar = false;
-						}
-					
-						/*
-						 * sí la posición es más menor que el tamaño del array vamos pasando desde la posición que queremos borrar una posición más del array
-						 * y la última posición la borramos
-						 */
-						if (i < this.array.length && terminar) {
-							for(j = i ; j < this.array.length ; j++) {
-								this.array[j -1] = this.array[j];
-							}
-							this.array[this.array.length -1] = nulo;
-							totalBorrados ++;
-						}
-					
-						/*
-						 * si la posición es la última del tamaño del array lo que hacemos es borrar la última posición
-						 */
-						if (i == this.array.length && terminar) {
-							this.array[i -1] = nulo;
-							totalBorrados ++;
-						}
-					
-						//si el array no esta lleno de valores no vamos aqui
-					}else {	
-					
-						/*
-						 * búscamos la posición del valor que queremos borrar
-						 */
-						for (i = 0 ; i < this.array.length && salir ; i++) {
-							if (this.array[i] == valor) {
-								salir = false;
-							}
-						}
-						
-						if (salir) { 
-							terminar = false;
-						}
-					
-						/*
-						 * aqui ponemos las diferentes opciones que tenemos si el array no esta lleno y la posición que queramos borrar
-						 */
-						//si el array no esta lleno y solo hay un número
-						if (i -1 == 0 && tamaño == 1 && terminar) {
-							this.array[0] = nulo;
-							totalBorrados ++;
-							}else {
-								//si la posición que queremos borrar es la del tamaño del array
-								if (i == tamaño && terminar) {
-									this.array[i -1] = nulo;
-									totalBorrados ++;
-									}else {
-										//si la posición que queremos borrar está en medio del array
-										if (i > 0 && terminar) {
-											for(j = i ; j < this.array.length ; j++) {
-												this.array[j -1] = this.array[j];
-											}
-											totalBorrados ++;
-										} 
-									}
-							}
-					}
-				salir = true;
-				lleno = true;
 			}
-			
-			return totalBorrados;
-			
+			return cantidad;
 		}
 		
 		
