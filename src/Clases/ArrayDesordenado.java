@@ -19,52 +19,48 @@ public class ArrayDesordenado {
 		return this.array;
 	}
 	
-	//método para aumentar el tamaño del array si está lleno
 	/**
-	 * este método lo que hace es insertar un valor en el array creado, comprueba si está lleno el array
-	 * y si lo está crea otro array con 4 posiciones más
-	 * @param int valor
+	 * Método insertar, para meter un valor dado por parámetro, el cual se pondrá en la
+	 * siguiente posición del array, en la que haya un NULO, si no hubiese más espacio en dicho
+	 * array, se agrandaria en tam/4 veces.
+	 * 
+	 * @param valor
+	 * @author Gonzalo Vicente Cepeda
 	 */
 	public void insertar (int valor) {
-		boolean lleno = true;
-		int array;
-		int arraynuevo [];
-		int i = 0;
-		
-		//lo primero que hacemos es ver si el array está lleno
-		for (i = 0 ; i < this.array.length && lleno ; i++) {
-			if (this.array[i] == -9) {
+		int i;
+		boolean sw = true, sw_espacio = false;
+		for (i = 0; i < this.array.length && sw == true; i++) {
+			if (this.array[i] == this.NULO) {
 				this.array[i] = valor;
-				lleno = false;
+				sw = false;
+				sw_espacio = true;
 			}
 		}
-		
-		/**
-		 * si está lleno lo que hacemos es crear un array nuevo con el tamaño
-		 * del anterior, le pasamos los datos del anterior array al nuevo.
-		 * para después crear otro nuevo array con 4 posiciones más y volver a pasar
-		 * los datos de un array a otro
-		 */
-		if (lleno) {
-			array = this.array.length;
-			arraynuevo = new int [array];
-			
-			for (i = 0 ; i < this.array.length ; i++) {
-				arraynuevo[i] = this.array[i];
+		if (sw_espacio == false) {
+			int sumaTam;
+			if (this.array.length > 3) {
+				sumaTam = this.array.length / 4;
 			}
-			
-			this.array = new int [array + 4];
-			
-			for (i = 0 ; i < arraynuevo.length ; i++) { 
-				this.array[i] = arraynuevo[i];
+			else {
+				sumaTam = 1;
 			}
-			this.array[i] = valor;
-			
-			for (i = i + 1 ; i < this.array.length ; i++) {
-				this.array[i] = nulo;
+			int array_aux [] = new int [this.array.length + sumaTam];
+			for (i = 0; i < array_aux.length; i++) {
+				if (i < this.array.length) {
+					array_aux[i] = this.array[i];
+				}
+				else {
+					if (i == this.array.length) {
+						array_aux[i] = valor;
+					}
+					else {
+						array_aux[i] = this.NULO;
+					}
+				}
 			}
+			this.array = array_aux;
 		}
-		
 	}
 	
 	/**
