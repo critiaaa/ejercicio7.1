@@ -31,7 +31,7 @@ public class ArrayDesordenado {
 		int i;
 		boolean sw = true, sw_espacio = false;
 		for (i = 0; i < this.array.length && sw == true; i++) {
-			if (this.array[i] == this.NULO) {
+			if (this.array[i] == this.nulo) {
 				this.array[i] = valor;
 				sw = false;
 				sw_espacio = true;
@@ -55,7 +55,7 @@ public class ArrayDesordenado {
 						array_aux[i] = valor;
 					}
 					else {
-						array_aux[i] = this.NULO;
+						array_aux[i] = this.nulo;
 					}
 				}
 			}
